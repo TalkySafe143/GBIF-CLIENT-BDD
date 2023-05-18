@@ -1,7 +1,7 @@
 import React, {useRef, useState} from 'react';
-import '../styles/SignUp.css';
-import axios from 'axios'
-import {redirect} from "react-router-dom";
+import styleSignUp from '../styles/SignUp.module.css';
+import axios, {AxiosError} from 'axios'
+import { Navigate } from "react-router-dom";
 
 export default function SignUp() {
 
@@ -9,26 +9,39 @@ export default function SignUp() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isAdmin, setAdmin] = useState(false);
+    const [isLogged, setLogged] = useState('no');
 
-    async function register(e: { preventDefault: () => void; }) {
+    async function Register(e: { preventDefault: () => void; }) {
         e.preventDefault();
 
-        const res = await axios.post('http://localhost:3000/api/auth/sign-up', {
-            name: username,
-            email,
-            password,
-            isAdmin
-        })
-        console.log(res)
-
-        redirect('/home');
+        try {
+            const res = await axios.post(`http://localhost:3000/api/auth/sign-up`, {
+                name: username,
+                email,
+                password,
+                isAdmin
+            })
+            const apiRes = await res.data
+            if (apiRes.error === null) setLogged('yes');
+            else setLogged(apiRes.error.message);
+            // @ts-ignore
+        } catch (e: AxiosError) {
+            setLogged(e.response.data.error.message)
+        }
     }
 
     return (
-        <div className="boxP">
-            <div className="formP">
+        <>
+        <img src="ardilla.png" alt="ardilla" className={styleSignUp.ardilla}
+            style={{ left: window.innerHeight + 310}}
+        />
+        <img src="colibri.png" alt="colibri" className={styleSignUp.colibri}
+             style={{ left: window.innerHeight - (window.innerHeight + 450) }}
+        />
+        <div className={styleSignUp.boxP}>
+            <div className={styleSignUp.formP}>
                 <h2>Sign up</h2>
-                <div className="inputboxP">
+                <div className={styleSignUp.inputboxP}>
                     <input
                         type="text"
                         required={true}
@@ -38,7 +51,7 @@ export default function SignUp() {
                     <span>Username</span>
                     <i></i>
                 </div>
-                <div className="inputboxP">
+                <div className={styleSignUp.inputboxP}>
                     <input
                         type="email"
                         required={true}
@@ -48,7 +61,7 @@ export default function SignUp() {
                     <span>Email</span>
                     <i></i>
                 </div>
-                <div className="inputboxP">
+                <div className={styleSignUp.inputboxP}>
                     <input
                         type="password"
                         required={true}
@@ -58,7 +71,7 @@ export default function SignUp() {
                     <span>Password</span>
                     <i></i>
                 </div>
-                <div className="inputboxP">
+                <div className={styleSignUp.inputboxPCheck}>
                     <input
                         type="checkbox"
                         required={true}
@@ -66,13 +79,21 @@ export default function SignUp() {
                     />
                     <label>Administrador</label>
                 </div>
-                <div className="loginP">
-                    <a onClick={register}>Sign up</a>
+                <div className={styleSignUp.loginP}>
+                    <a onClick={Register}>Sign up</a>
                 </div>
-                <div className="signupP">
+                <div className={styleSignUp.signupP}>
                     <a href="/sign-in">Sign in</a>
                 </div>
+                <h1 className={styleSignUp.error}>
+                    {
+                        isLogged === 'yes' ? <Navigate to={'/sign-in'} /> : (
+                            isLogged === 'no' ? "" : isLogged
+                        )
+                    }
+                </h1>
             </div>
         </div>
+        </>
     )
 }

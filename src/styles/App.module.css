@@ -5,20 +5,23 @@
   padding: 0;
   box-sizing: border-box;
   font-family: 'Poppins',sans-serif;
+  overflow-x: hidden;
+  overflow-y: hidden;
 }
 
 body{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh ;
-  background:#8ea79aa4;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  min-height: 100vh !important;
+  background:#8ea79aa4 !important;
+  overflow-y: scroll;
 }
 
 .box{
   position: relative;
   width: 380px;
-  height: 520px;
+  height: 620px;
   background: rgb(114, 156, 135);
   border-radius: 8px;
   overflow: hidden;
@@ -30,7 +33,7 @@ body{
   top: -50%;
   left: -50%;
   width: 380px;
-  height: 520px;
+  height: 620px;
   background: linear-gradient(0deg,transparent,#91dd9b,#45ffa2);
   transform-origin: bottom right;
   animation: animate 6s linear infinite;
@@ -41,7 +44,7 @@ body{
   top: -50%;
   left: -50%;
   width: 380px;
-  height: 520px;
+  height: 620px;
   background: linear-gradient(0deg,transparent,#91dd9b,#45ffa2);
   transform-origin: bottom right;
   animation: animate 6s linear infinite;
@@ -161,4 +164,23 @@ body{
   display: flex;
   justify-content: center;
 
+}
+
+.error {
+  margin-top: 10px;
+  text-align: center;
+  font-size: 20px;
+  width: 100%;
+  color: red;
+}
+
+.ardilla {
+  position: absolute;
+  top: 0;
+}
+
+.colibri {
+  position: absolute;
+  top: 0;
+  transform: scaleX(-1);
 }

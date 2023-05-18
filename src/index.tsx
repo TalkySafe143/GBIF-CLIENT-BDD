@@ -3,11 +3,18 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import SignIn from './components/SignIn';
 import SignUp from "./components/SignUp";
+import Home from "./components/Home";
 import reportWebVitals from './reportWebVitals';
 
-import { createBrowserRouter, RouterProvider, redirect } from 'react-router-dom';
+import {createBrowserRouter, RouterProvider, redirect, Navigate} from 'react-router-dom';
+import Profile from "./components/Profile";
+import Queries from "./components/Queries";
 
 const routes = [
+    {
+        path: '/',
+        element: <Navigate to={'/sign-in'}/>
+    },
     {
         path: "/sign-in",
         element: <SignIn />
@@ -15,6 +22,18 @@ const routes = [
     {
         path: '/sign-up',
         element: <SignUp />
+    },
+    {
+        path:'/home',
+        element: <Home />
+    },
+    {
+        path: '/profile',
+        element: <Profile />
+    },
+    {
+        path: '/queries',
+        element: <Queries />
     }
 ]
 
